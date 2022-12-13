@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - release.yaml
   - token.yaml
+  - rbac.yaml
