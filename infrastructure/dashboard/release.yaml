@@ -24,6 +24,12 @@ spec:
 
     ingress:
       enabled: true
+      hosts:
+      - dashboard.${CLUSTER_DOMAIN}
+      tls:
+      - secretName: kubernetes-dashboard-tls
+        hosts:
+          - dashboard.${CLUSTER_DOMAIN}
 
     serviceMonitor:
       enabled: true
