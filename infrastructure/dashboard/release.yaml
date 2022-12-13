@@ -20,6 +20,7 @@ spec:
   values:
     settings:
       clusterName: ${CLUSTER_NAME}
+      itemsPerPage: 20 # https://github.com/kubernetes/dashboard/issues/7445
 
     serviceMonitor:
       enabled: false
