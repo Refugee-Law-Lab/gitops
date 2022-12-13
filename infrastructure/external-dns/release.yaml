@@ -18,6 +18,8 @@ spec:
     remediation:
       retries: 3
   values:
+    domainFilters:
+      - rllp.ca
     provider: cloudflare
     cloudflare:
       proxied: false
@@ -31,10 +33,6 @@ spec:
       name: global-secrets
       valuesKey: CLOUDFLARE_API_KEY
       targetPath: cloudflare.apiKey
-    - kind: Secret
-      name: cluster-secrets
-      valuesKey: CLUSTER_DOMAIN
-      targetPath: domainFilters[0]
     - kind: ConfigMap
       name: cluster-config
       valuesKey: CLUSTER_NAME
