@@ -3,5 +3,4 @@ kind: Kustomization
 
 namespace: flux-system
 resources:
-  - cloudflare-secret.sops.yaml
-  - s3-secret.sops.yaml
+  - global-secrets.sops.yaml
