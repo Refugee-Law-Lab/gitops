@@ -1,0 +1,1 @@
+mkdir -p ~/.config/sops/age && echo $SOPS_AGEKEY > ~/.config/sops/age/keys.txt

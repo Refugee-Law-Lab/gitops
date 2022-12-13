@@ -1,0 +1,82 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/kubernetes-helm
+{
+	"name": "Kubernetes - Local Configuration",
+	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:1": {
+			"installZsh": "true",
+			"username": "vscode",
+			"uid": "1000",
+			"gid": "1000",
+			"upgradePackages": "false",
+			"installOhMyZsh": "true",
+			"nonFreePackages": "true"
+		},
+		"ghcr.io/devcontainers/features/docker-from-docker:1": {
+			"enableNonRootDocker": "true",
+			"username": "vscode",
+			"moby": "true"
+		},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"version": "latest",
+			"helm": "latest",
+			"minikube": "none"
+		},
+		"./local-features/copy-kube-config": {
+			"username": "vscode"
+		},
+		"ghcr.io/mpriscella/features/sops:1": {},
+		"ghcr.io/devcontainers-contrib/features/cmctl-asdf:1": {},
+		"ghcr.io/eitsupi/devcontainer-features/go-task:1": {},
+		"ghcr.io/eitsupi/devcontainer-features/jq-likes:1": {},
+		"ghcr.io/rjfmachado/devcontainer-features/cloud-native:1": {},
+		"ghcr.io/rio/features/k9s:1": {}
+	},
+
+	"overrideFeatureInstallOrder": [
+		"ghcr.io/devcontainers/features/common-utils",
+		"ghcr.io/devcontainers/features/docker-from-docker",
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube",
+		"./local-features/copy-kube-config"
+	],
+	"remoteEnv": {
+		"SYNC_LOCALHOST_KUBECONFIG": "true"
+	},
+
+	"mounts": [
+        {
+            "source": "${env:HOME}${env:USERPROFILE}/.kube",
+            "target": "/usr/local/share/kube-localhost",
+            "type": "bind"
+        }
+		// Uncomment the next line to also sync certs in your .minikube folder
+		// {
+        //     "source": "${env:HOME}${env:USERPROFILE}/.minikube",
+        //     "target": "/usr/local/share/minikube-localhost",
+        //     "type": "bind"
+        // }
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"Weaveworks.vscode-gitops-tools",
+				"signageos.signageos-vscode-sops",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"redhat.vscode-yaml"
+			]
+		}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "/bin/bash .devcontainer/scripts/post_create.sh"
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
