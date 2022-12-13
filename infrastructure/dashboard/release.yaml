@@ -29,6 +29,9 @@ spec:
         cert-manager.io/issuer-kind: ClusterIssuer
       hosts:
       - dashboard.${CLUSTER_DOMAIN}
+      paths:
+      - /
+      - /*
       tls:
       - secretName: kubernetes-dashboard-tls
         hosts:
