@@ -1,0 +1,35 @@
+# h/t https://github.com/Pumba98/flux2-gitops/blob/70753b77281cd3fa5b417f7910708dce488f430e/apps/all/weave-gitops/helm-release.yaml
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: weave-gitops
+  namespace: flux-system
+spec:
+  targetNamespace: flux-system
+  interval: 5m
+  chart:
+    spec:
+      chart: weave-gitops
+      version: 4.0.8
+      sourceRef:
+        kind: HelmRepository
+        name: weave
+        namespace: flux-system
+  values:
+    adminUser:
+      create: true
+      username: admin
+      passwordHash: ${WEAVE_GITOPS_PASSWORD_HASH} # echo -n $PASSWORD | gitops get bcrypt-hash
+    ingress:
+      enabled: true
+      hosts:
+        - host: gitops.${CLUSTER_DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - gitops.${CLUSTER_DOMAIN}
+
+
