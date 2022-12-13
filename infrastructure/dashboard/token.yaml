@@ -4,5 +4,5 @@ metadata:
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
   annotations:
-    kubernetes.io/service-account.name: kubernetes-dashboard
+    kubernetes.io/service-account.name: admin-user
 type: kubernetes.io/service-account-token
