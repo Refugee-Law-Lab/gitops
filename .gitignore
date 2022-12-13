@@ -1,0 +1,5 @@
+.env
+.env.secret
+.secrets/
+
+**/.decrypted*.sops.yaml
