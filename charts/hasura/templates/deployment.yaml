@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hasura.fullname" . }}
+  labels:
+    {{- include "hasura.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "hasura.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "hasura.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "hasura.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: HASURA_GRAPHQL_DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.hasura.database.connection.secretRef.name }}
+                key: {{ .Values.hasura.database.connection.secretRef.name | default CONNECTION_STRING }}
+          ## enable the console served by server
+          - name: HASURA_GRAPHQL_ENABLE_CONSOLE
+            value: {{ .Values.hasura.console.enable }}
+          ## enable debugging mode. It is recommended to disable this in production
+          - name: HASURA_GRAPHQL_DEV_MODE
+            value: {{ .Values.hasura.debug | default "false" }}
+          - name: HASURA_GRAPHQL_ADMIN_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.hasura.adminSecret.secretRef.name }}
+                  key: {{ .Values.hasura.adminSecret.secretRef.key }}
+          - name: HASURA_GRAPHQL_V1_BOOLEAN_NULL_COLLAPSE
+            value: "true"
+          # - name: HASURA_GRAPHQL_CORS_DOMAIN
+          #   value: http://example.com
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
