@@ -6,3 +6,15 @@ resources:
   - release.yaml
   - flux-dashboards.yaml
   - flux-alerts.yaml
+
+
+# https://github.com/fluxcd/flux2/blob/main/manifests/monitoring/monitoring-config/kustomization.yaml
+configMapGenerator:
+  - name: grafana-dashboards
+    files:
+      - dashboards/nginx.json
+    options:
+      labels:
+        grafana_dashboard: "1"
+        app.kubernetes.io/part-of: flux
+        app.kubernetes.io/component: monitoring
