@@ -32,5 +32,6 @@ spec:
     image:
       tag: v2.13.1
     hasura:
+      debug: "true"
       console:
-        enable: true
+        enable: "true"
