@@ -16,13 +16,20 @@ spec:
         kind: HelmRepository
         name: weave
         namespace: flux-system
+  valuesFrom:
+    - kind: Secret
+      name: cluster-secrets
+      valuesKey: WEAVE_GITOPS_PASSWORD_HASH # echo -n $PASSWORD | gitops get bcrypt-hash
+      targetPath: adminUser.passwordHash
   values:
     adminUser:
       create: true
       username: admin
-      passwordHash: ${WEAVE_GITOPS_PASSWORD_HASH} # echo -n $PASSWORD | gitops get bcrypt-hash
     ingress:
       enabled: true
+      annotations:
+        cert-manager.io/issuer: letsencrypt-staging
+        cert-manager.io/issuer-kind: ClusterIssuer
       hosts:
         - host: gitops.${CLUSTER_DOMAIN}
           paths:

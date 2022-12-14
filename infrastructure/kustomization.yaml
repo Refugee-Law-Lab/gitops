@@ -4,3 +4,4 @@ resources:
   - cert-manager
   - dashboard
   - external-dns
+  - weave-gitops
