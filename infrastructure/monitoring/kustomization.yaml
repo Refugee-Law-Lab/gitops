@@ -11,6 +11,7 @@ resources:
 # https://github.com/fluxcd/flux2/blob/main/manifests/monitoring/monitoring-config/kustomization.yaml
 configMapGenerator:
   - name: grafana-dashboards
+    namespace: monitoring
     files:
       - dashboards/nginx.json
     options:
