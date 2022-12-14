@@ -38,8 +38,7 @@ spec:
   type: slack
   channel: cluster-alerts
   secretRef:
-    name: global-secrets
-    key: SLACK_WEBHOOK_URL
+    name: slack-webhook
 ---
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
