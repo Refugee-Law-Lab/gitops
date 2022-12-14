@@ -14,8 +14,6 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-      verify:
-        provider: cosign
       interval: 60m
   install:
     crds: CreateReplace
