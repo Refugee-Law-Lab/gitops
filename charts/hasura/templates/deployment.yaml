@@ -59,10 +59,10 @@ spec:
             {{- end }}
           ## enable the console served by server
           - name: HASURA_GRAPHQL_ENABLE_CONSOLE
-            value: {{ .Values.hasura.console.enable }}
+            value: "{{ .Values.hasura.console.enable | default false }}"
           ## enable debugging mode. It is recommended to disable this in production
           - name: HASURA_GRAPHQL_DEV_MODE
-            value: {{ .Values.hasura.debug | default "false" }}
+            value: "{{ .Values.hasura.debug | default false }}"
           - name: HASURA_GRAPHQL_ADMIN_SECRET
             {{- if ((.Values.hasura.adminSecret.secretRef).name) }}
             valueFrom:
