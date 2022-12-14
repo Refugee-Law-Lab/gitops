@@ -34,7 +34,7 @@ spec:
       valuesKey: CLOUDFLARE_API_KEY
       targetPath: cloudflare.apiKey
     - kind: ConfigMap
-      name: cluster-config
+      name: cluster-settings
       valuesKey: CLUSTER_NAME
       targetPath: txtOwnerId
-      optional: true
+      # optional: true
