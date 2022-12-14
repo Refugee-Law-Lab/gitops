@@ -24,18 +24,16 @@ spec:
   values:
     defaultBackend:
       enabled: true
-    # https://kubernetes.github.io/ingress-nginx/user-guide/multiple-ingress/
     controller:
       service:
-        # type: ClusterIP
-        # external: 
-        #   enabled: false
-        # internal: 
-        #   enabled: true
         type: LoadBalancer
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+          additionalLabels:
+            release: prometheus
       
-      # reportNodeInternalIp: false
-      # hostNetwork: true
       ingressClassResource:
         name: nginx
         enabled: true
