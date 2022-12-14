@@ -42,10 +42,7 @@ spec:
           cert-manager.io/issuer: letsencrypt-staging
           cert-manager.io/issuer-kind: ClusterIssuer
         hosts:
-          - host: monitoring.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                pathType: ImplementationSpecific
+          - monitoring.${CLUSTER_DOMAIN}
         tls:
         - secretName: monitoring-tls
           hosts:
