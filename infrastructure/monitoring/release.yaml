@@ -22,7 +22,7 @@ spec:
   # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
   values:
     alertmanager:
-      enabled: false
+      enabled: true
     prometheus:
       prometheusSpec:
         retention: 24h
@@ -34,3 +34,17 @@ spec:
         podMonitorSelector:
           matchLabels:
             app.kubernetes.io/component: monitoring
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/issuer: letsencrypt-staging
+        cert-manager.io/issuer-kind: ClusterIssuer
+      hosts:
+        - host: monitoring.${CLUSTER_DOMAIN}
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+       - secretName: monitoring-tls
+         hosts:
+           - monitoring.${CLUSTER_DOMAIN}
