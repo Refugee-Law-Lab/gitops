@@ -24,7 +24,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "hasura.serviceAccountName" . }}
+      {{/* # serviceAccountName: {{ include "hasura.serviceAccountName" . }} */}}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -49,10 +49,14 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
           - name: HASURA_GRAPHQL_DATABASE_URL
+            {{- if ((.Values.hasura.database.connection.secretRef).name) }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.hasura.database.connection.secretRef.name }}
-                key: {{ .Values.hasura.database.connection.secretRef.name | default CONNECTION_STRING }}
+                key: {{ .Values.hasura.database.connection.secretRef.key | default "CONNECTION_STRING" }}
+            {{- else }}
+            value: "{{ .Values.hasura.database.connection.string }}"
+            {{- end }}
           ## enable the console served by server
           - name: HASURA_GRAPHQL_ENABLE_CONSOLE
             value: {{ .Values.hasura.console.enable }}
@@ -60,10 +64,14 @@ spec:
           - name: HASURA_GRAPHQL_DEV_MODE
             value: {{ .Values.hasura.debug | default "false" }}
           - name: HASURA_GRAPHQL_ADMIN_SECRET
+            {{- if ((.Values.hasura.adminSecret.secretRef).name) }}
             valueFrom:
                 secretKeyRef:
                   name: {{ .Values.hasura.adminSecret.secretRef.name }}
                   key: {{ .Values.hasura.adminSecret.secretRef.key }}
+            {{- else }}
+            value: "{{ .Values.hasura.adminSecret.password }}"
+            {{- end }}
           - name: HASURA_GRAPHQL_V1_BOOLEAN_NULL_COLLAPSE
             value: "true"
           # - name: HASURA_GRAPHQL_CORS_DOMAIN

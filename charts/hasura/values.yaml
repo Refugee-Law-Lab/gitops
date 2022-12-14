@@ -74,13 +74,13 @@ affinity: {}
 
 hasura:
   database:
-    connection:
-      secretRef:
-        name: hasura-secrets
-        key: CONNECTION_STRING
+    # connection:
+    #   secretRef:
+    #     name: hasura-secrets
+    #     key: CONNECTION_STRING
   console:
     enable: true
   adminSecret:
-    secretRef:
-      name: hasura-secrets
-      key: ADMIN_SECRET
+    # secretRef:
+    #   name: hasura-secrets
+    #   key: ADMIN_SECRET
