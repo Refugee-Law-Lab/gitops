@@ -32,7 +32,24 @@ spec:
   values:
     image:
       tag: v2.13.2
+    ingress:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/issuer: letsencrypt-staging
+        cert-manager.io/issuer-kind: ClusterIssuer
+        # external-dns.alpha.kubernetes.io/target: somecloudflaretunnel.rllp.ca
+        # external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+      hosts:
+        - host: api.rllp.ca
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+       - secretName: hasura-tls
+         hosts:
+           - api.rllp.ca
     hasura:
-      debug: "true"
+      debug: true
       console:
-        enable: "true"
+        enable: true
