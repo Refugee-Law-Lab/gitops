@@ -4,7 +4,7 @@ metadata:
   name: hasura
   namespace: flux-system
 spec:
-  targetNamespace: api
+  targetNamespace: hasura
   releaseName: hasura
   chart:
     spec:
