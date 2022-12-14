@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: slack-webhook
+    namespace: flux-system
+stringData:
+    address: ENC[AES256_GCM,data:bDA9CBqDWfu/5W1P+sXkjrVZOgJCtHdlmcJP2gzd98v2sVRrG34lsMbK6ukggnohyRYD6GbEnHMnjlsVBfExitqFm4OKV6IZVswP9ANKqpSn,iv:3lugpEYN4mkFx3S5DYikaHFZBtqeCemh+Sy+xolUx7s=,tag:MWG+5NQZJ+HYAvT/ksWpgg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1xftjgmm59hc7up45dq94a4uj025htlm5mqa802zhtyx6hynsnd5sdhn357
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBleS8wQUdtNXdPNXlhd1d1
+            Ny9ObnV2VXZqajlCaWt3T3N4SnU3MnZ5cGhBCjBqN3FpdDRqbS9uMDA3UlFJZWZo
+            blZxQmtESUpMTE9ySjk5T2pvaVo1SjgKLS0tIFE0Lys0TkpMcU92QVgvbDdMK3d2
+            ZTFUQkNNZE1JN0xuMHRqbnc5TzUwWVkK6cC+bHGUKPhiM+gH2h4tjUpiK3AP49HF
+            k4Yjowa7nrBowX/tpbzN5/VxAiuJZhs4Vghl58QgdxyKuO279lIctQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-12-14T16:31:01Z"
+    mac: ENC[AES256_GCM,data:Hjclsn3o2Q2qCPgWYUVMYhAZa/6AP9oUGV3584L9eJSHoGEVmiYiNFqp9u0Hsco790ccypUFM+L4Q+lr/7dtqB7x0wez39JI6bIWPFnA4H5Kv2MB7+cDIBdJxbG2oFkXtQQABcpm2GNd2MlozL1SNpqe9L/KVtUJyZISBkptPwg=,iv:gLqu3JNJcVpHd+UinbaFL+FjYhULvdezfGu2A9XqL4A=,tag:x6imuJMhHptZ7byTWK8dcw==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
