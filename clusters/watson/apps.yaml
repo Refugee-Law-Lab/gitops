@@ -10,4 +10,5 @@ spec:
     name: flux-system
   path: ./apps/watson
   wait: true
+  prune: true
   timeout: 10m
