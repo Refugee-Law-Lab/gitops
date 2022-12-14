@@ -46,7 +46,7 @@ metadata:
   name: cluster-alerts
   namespace: flux-system
 spec:
-  summary: "production cluster"
+  summary: "GitOps status for cluster ${CLUSTER_NAME}"
   providerRef:
     name: slack
   eventSeverity: info
