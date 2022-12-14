@@ -5,4 +5,5 @@ resources:
   - dashboard
   - external-dns
   - ingress-nginx
+  - monitoring
   - weave-gitops
