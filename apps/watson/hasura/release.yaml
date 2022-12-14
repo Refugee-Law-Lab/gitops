@@ -4,7 +4,7 @@ metadata:
   name: hasura
   namespace: flux-system
 spec:
-  targetNamespace: hasura
+  targetNamespace: api
   releaseName: hasura
   chart:
     spec:
@@ -15,6 +15,7 @@ spec:
         namespace: flux-system
   interval: 5m
   install:
+    createNamespace: true
     remediation:
       retries: -1
   
