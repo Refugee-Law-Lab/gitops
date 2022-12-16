@@ -43,8 +43,8 @@ spec:
       hosts:
         - host: api.rllp.ca
           paths:
-            - path: /
-              pathType: ImplementationSpecific
+            - path: /api/rest
+              pathType: Prefix
       tls:
        - secretName: hasura-tls
          hosts:
@@ -52,7 +52,7 @@ spec:
     hasura:
       debug: true
       console:
-        enable: true
+        enable: false
       extraEnv:
         - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
           value: anonymous
