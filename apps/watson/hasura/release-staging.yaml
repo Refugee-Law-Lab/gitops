@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hasura-staging
+  namespace: flux-system
+spec:
+  targetNamespace: api-staging
+  releaseName: hasura-staging
+  chart:
+    spec:
+      chart: ./charts/hasura
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  
+  valuesFrom:
+    - kind: Secret
+      name: cluster-secrets
+      valuesKey: API_DATABASE_DEV_CONNECTION_STRING
+      targetPath: hasura.database.connection.string
+    - kind: Secret
+      name: cluster-secrets
+      valuesKey: HASURA_ADMIN_SECRET
+      targetPath: hasura.adminSecret.password
+
+  values:
+    image:
+      tag: v2.13.2
+    ingress:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/issuer: letsencrypt-staging
+        cert-manager.io/issuer-kind: ClusterIssuer
+      hosts:
+        - host: staging.api.rllp.ca
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+       - secretName: hasura-staging-tls
+         hosts:
+           - staging.api.rllp.ca
+    hasura:
+      debug: true
+      console:
+        enable: true
