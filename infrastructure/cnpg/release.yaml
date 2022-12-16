@@ -17,7 +17,7 @@ spec:
         namespace: flux-system
   interval: 1h
   install:
-    createNamespace: true
+    # createNamespace: true
     remediation:
       retries: 3
     disableWait: true
