@@ -39,14 +39,14 @@ spec:
         cert-manager.io/issuer: letsencrypt-staging
         cert-manager.io/issuer-kind: ClusterIssuer
       hosts:
-        - host: staging.api.rllp.ca
+        - host: api.staging.rllp.ca
           paths:
             - path: /
               pathType: ImplementationSpecific
       tls:
        - secretName: hasura-staging-tls
          hosts:
-           - staging.api.rllp.ca
+           - api.staging.rllp.ca
     hasura:
       debug: true
       console:
