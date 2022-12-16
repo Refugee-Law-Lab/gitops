@@ -51,3 +51,6 @@ spec:
       debug: true
       console:
         enable: true
+      extraEnv:
+        - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
+          value: anonymous
