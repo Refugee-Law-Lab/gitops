@@ -56,3 +56,5 @@ spec:
       extraEnv:
         - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
           value: anonymous
+        - name: HASURA_GRAPHQL_CORS_DOMAIN
+          value: "rllp.ca"
