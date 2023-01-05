@@ -24,10 +24,10 @@ spec:
       name: cluster-secrets
       valuesKey: API_DATABASE_DEV_CONNECTION_STRING
       targetPath: hasura.database.connection.string
-    - kind: Secret
-      name: cluster-secrets
-      valuesKey: HASURA_ADMIN_SECRET
-      targetPath: hasura.adminSecret.password
+    # - kind: Secret
+    #   name: cluster-secrets
+    #   valuesKey: HASURA_ADMIN_SECRET
+    #   targetPath: hasura.adminSecret.password
 
   values:
     image:
@@ -38,6 +38,7 @@ spec:
       annotations:
         cert-manager.io/issuer: letsencrypt-staging
         cert-manager.io/issuer-kind: ClusterIssuer
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
       hosts:
         - host: api.staging.rllp.ca
           paths:
