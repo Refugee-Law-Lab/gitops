@@ -63,8 +63,9 @@ spec:
           ## enable debugging mode. It is recommended to disable this in production
           - name: HASURA_GRAPHQL_DEV_MODE
             value: "{{ .Values.hasura.debug | default false }}"
+          {{- if ((.Values.hasura).adminSecret) }}
           - name: HASURA_GRAPHQL_ADMIN_SECRET
-            {{- if (((.Values.hasura).adminSecret).secretRef) }}
+            {{- if (.Values.hasura.adminSecret).secretRef) }}
             valueFrom:
                 secretKeyRef:
                   name: {{ .Values.hasura.adminSecret.secretRef.name }}
@@ -72,6 +73,7 @@ spec:
             {{- else }}
             value: "{{ (.Values.hasura.adminSecret).password | default "" }}"
             {{- end }}
+          {{- end }}
           - name: HASURA_GRAPHQL_V1_BOOLEAN_NULL_COLLAPSE
             value: "true"
           {{- if .Values.hasura.extraEnv }}
