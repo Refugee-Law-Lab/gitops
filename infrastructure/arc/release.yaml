@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: arc
+  namespace: flux-system
+spec:
+  targetNamespace: actions-runner-system
+  releaseName: arc
+  chart:
+    spec:
+      chart: actions-runner-controller
+      sourceRef:
+        kind: HelmRepository
+        name: actions-runner-controller
+        namespace: flux-system
+  interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: -1
+  
+  valuesFrom:
+    - kind: Secret
+      name: global-secrets
+      valuesKey: GH_PAT_ARC
+      targetPath: authSecret.github_token
+
+  values:
+    authSecret:
+      create: true
