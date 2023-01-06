@@ -4,3 +4,4 @@ resources:
   # - namespace.yaml
   - release.yaml
   - release-staging.yaml
+  - gha-runner.yaml
