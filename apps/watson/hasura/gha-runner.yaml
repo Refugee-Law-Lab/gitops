@@ -8,6 +8,7 @@ spec:
   template:
     spec:
       repository: Refugee-Law-Lab/api
+      dockerMTU: 1450
       env:
         - name: ARC_DOCKER_MTU_PROPAGATION
           value: "true"
