@@ -1,18 +1,18 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/kubernetes-helm
 {
-	"name": "Kubernetes - Local Configuration",
+	"name": "RLL GitOps",
 	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
 	"features": {
-		"ghcr.io/devcontainers/features/common-utils:1": {
-			"installZsh": "true",
-			"username": "vscode",
-			"uid": "1000",
-			"gid": "1000",
-			"upgradePackages": "false",
-			"installOhMyZsh": "true",
-			"nonFreePackages": "true"
-		},
+		// "ghcr.io/devcontainers/features/common-utils:1": {
+		// 	"installZsh": "true",
+		// 	"username": "vscode",
+		// 	"uid": "1000",
+		// 	"gid": "1000",
+		// 	"upgradePackages": "false",
+		// 	"installOhMyZsh": "true",
+		// 	"nonFreePackages": "true"
+		// },
 		"ghcr.io/devcontainers/features/docker-from-docker:1": {
 			"enableNonRootDocker": "true",
 			"username": "vscode",
@@ -23,9 +23,9 @@
 			"helm": "latest",
 			"minikube": "none"
 		},
-		"./local-features/copy-kube-config": {
-			"username": "vscode"
-		},
+		// "./local-features/copy-kube-config": {
+		// 	"username": "vscode"
+		// },
 		"ghcr.io/mpriscella/features/sops:1": {},
 		"ghcr.io/devcontainers-contrib/features/cmctl-asdf:1": {},
 		"ghcr.io/eitsupi/devcontainer-features/go-task:1": {},
@@ -34,17 +34,22 @@
 		"ghcr.io/rio/features/k9s:1": {}
 	},
 
-	"overrideFeatureInstallOrder": [
-		"ghcr.io/devcontainers/features/common-utils",
-		"ghcr.io/devcontainers/features/docker-from-docker",
-		"ghcr.io/devcontainers/features/kubectl-helm-minikube",
-		"./local-features/copy-kube-config"
-	],
-	"remoteEnv": {
-		"SYNC_LOCALHOST_KUBECONFIG": "true"
-	},
+	// "overrideFeatureInstallOrder": [
+	// 	"ghcr.io/devcontainers/features/common-utils",
+	// 	"ghcr.io/devcontainers/features/docker-from-docker",
+	// 	"ghcr.io/devcontainers/features/kubectl-helm-minikube",
+	// 	"./local-features/copy-kube-config"
+	// ],
+	// "remoteEnv": {
+	// 	"SYNC_LOCALHOST_KUBECONFIG": "true"
+	// },
 
 	"mounts": [
+		{
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.config/sops/age",
+            "target": "/home/vscode/.config/sops/age",
+            "type": "bind"
+        },
         {
             "source": "${env:HOME}${env:USERPROFILE}/.kube",
             "target": "/usr/local/share/kube-localhost",
