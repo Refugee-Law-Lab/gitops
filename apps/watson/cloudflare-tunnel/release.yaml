@@ -8,7 +8,7 @@ spec:
   releaseName: ${CLUSTER_NAME}
   chart:
     spec:
-      path: helm/cloudflare-tunnel
+      path: ./helm/cloudflare-tunnel
       sourceRef:
         kind: GitRepository
         name: cloudflare
