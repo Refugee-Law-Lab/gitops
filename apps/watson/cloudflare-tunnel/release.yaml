@@ -25,7 +25,7 @@ spec:
       valuesKey: CLOUDFLARE_ACCOUNT_ID
       targetPath: cloudflare.account
     - kind: ConfigMap
-      name: cluster-config
+      name: cluster-settings
       valuesKey: CLUSTER_NAME
       targetPath: cloudflare.tunnelName
     - kind: Secret
