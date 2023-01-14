@@ -10,7 +10,7 @@ spec:
     spec:
       path: helm/cloudflare-tunnel
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: cloudflare
         namespace: flux-system
   interval: 24h
