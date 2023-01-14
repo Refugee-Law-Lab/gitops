@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cloudflare-tunnel
+  namespace: flux-system
+spec:
+  targetNamespace: cloudflared
+  releaseName: ${CLUSTER_NAME}
+  chart:
+    spec:
+      path: helm/cloudflare-tunnel
+      sourceRef:
+        kind: HelmRepository
+        name: cloudflare
+        namespace: flux-system
+  interval: 24h
+  install:
+    createNamespace: true
+    remediation:
+      retries: -1
+  
+  valuesFrom:
+    - kind: Secret
+      name: global-secrets
+      valuesKey: CLOUDFLARE_ACCOUNT_ID
+      targetPath: cloudflare.account
+    - kind: ConfigMap
+      name: cluster-config
+      valuesKey: CLUSTER_NAME
+      targetPath: cloudflare.tunnelName
+    - kind: Secret
+      name: cluster-secrets
+      valuesKey: CLOUDFLARE_TUNNEL_ID
+      targetPath: cloudflare.tunnelId
+    - kind: Secret
+      name: cluster-secrets
+      valuesKey: CLOUDFLARE_TUNNEL_SECRET
+      targetPath: cloudflare.tunnelSecret
+
+  values:
+    cloudflare:
+      ingress: 
+        - hostname: api.rllp.ca
+          service: http://prod-ingress-nginx-controller:80
