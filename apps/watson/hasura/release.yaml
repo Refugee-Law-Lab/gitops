@@ -36,8 +36,8 @@ spec:
       enabled: true
       className: nginx
       annotations:
-        cert-manager.io/issuer: letsencrypt-staging
-        cert-manager.io/issuer-kind: ClusterIssuer
+        # cert-manager.io/issuer: letsencrypt-staging
+        # cert-manager.io/issuer-kind: ClusterIssuer
         external-dns.alpha.kubernetes.io/target: prod.rllp.ca
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
       hosts:
@@ -45,10 +45,10 @@ spec:
           paths:
             - path: /api/rest
               pathType: Prefix
-      tls:
-       - secretName: hasura-tls
-         hosts:
-           - api.rllp.ca
+      # tls:
+      #  - secretName: hasura-tls
+      #    hosts:
+      #      - api.rllp.ca
     hasura:
       debug: true
       console:
