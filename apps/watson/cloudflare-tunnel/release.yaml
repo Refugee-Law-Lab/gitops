@@ -35,9 +35,11 @@ spec:
     - kind: Secret
       name: cluster-secrets
       valuesKey: CLOUDFLARE_TUNNEL_SECRET
-      targetPath: cloudflare.tunnelSecret
+      targetPath: cloudflare.secret
 
   values:
+    image:
+      tag: "2022.12.1"
     cloudflare:
       ingress: 
         - hostname: api.rllp.ca
