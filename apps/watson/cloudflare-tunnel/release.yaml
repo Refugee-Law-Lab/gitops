@@ -43,4 +43,4 @@ spec:
     cloudflare:
       ingress: 
         - hostname: api.rllp.ca
-          service: http://prod-ingress-nginx-controller:80
+          service: http://prod-ingress-nginx-controller.ingress-nginx.svc.cluster.local:80
