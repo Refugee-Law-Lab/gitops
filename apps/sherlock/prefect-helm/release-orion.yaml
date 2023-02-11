@@ -22,7 +22,7 @@ spec:
   # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-orion/values.yaml
   values:
     orion:
-      # replicaCount: 3
+      replicaCount: 3
       # env:
       #   PREFECT_API_URL: orion.internal.rllp.ca/api
       env:
@@ -39,7 +39,7 @@ spec:
       # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
       autoscaling:
         # -- enable autoscaling for orion
-        enabled: true
+        enabled: false
         # -- minimum number of orion replicas
         minReplicas: 3
         # -- maximum number of orion replicas
