@@ -1,0 +1,107 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prefect-orion
+  namespace: flux-system
+spec:
+  targetNamespace: pipeline
+  releaseName: orion
+  chart:
+    spec:
+      chart: prefect-orion
+      sourceRef:
+        kind: HelmRepository
+        name: prefect
+        namespace: flux-system
+      version: 2023.2.3
+  interval: 1h
+  install:
+    remediation:
+      retries: 0
+  
+  # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-orion/values.yaml
+  values:
+    orion:
+      # replicaCount: 3
+      # env:
+      #   PREFECT_API_URL: orion.internal.rllp.ca/api
+      env:
+        - name: PREFECT_API_URL
+          value: http://orion.internal.rllp.ca/api
+        - name: PREFECT_API_REQUEST_TIMEOUT
+          value: '60.0'
+        - name: PREFECT_ORION_DATABASE_TIMEOUT
+          value: '10'
+        - name: PREFECT_ORION_DATABASE_CONNECTION_TIMEOUT
+          value: '10'
+
+      # Autoscaling configuration
+      # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
+      autoscaling:
+        # -- enable autoscaling for orion
+        enabled: true
+        # -- minimum number of orion replicas
+        minReplicas: 3
+        # -- maximum number of orion replicas
+        maxReplicas: 8
+        # -- target CPU utilization percentage
+        targetCPU: 75
+        # -- target Memory utilization percentage
+        targetMemory: 75
+
+      # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
+      resources:
+        requests:
+          memory: "512Mi"
+          cpu: "250m"
+        limits:
+          memory: "1024Mi"
+          cpu: "500m"
+
+      # https://github.com/PrefectHQ/prefect-helm#security-context
+      # https://github.com/PrefectHQ/prefect-helm/issues/54
+      podSecurityContext:
+        runAsUser: 0
+        fsGroup: 0
+        runAsNonRoot: false
+      containerSecurityContext:
+        runAsUser: 0
+        readOnlyRootFilesystem: false
+        runAsNonRoot: false
+        allowPrivilegeEscalation: false
+
+    ingress:
+      # -- enable ingress record generation for orion
+      enabled: true
+      ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+      ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+      # -- IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+      # className: internal
+      annotations:
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+      host:
+        # -- default host for the ingress record
+        hostname: orion.internal.rllp.ca
+        # -- default path for the ingress record
+        path: /
+        # -- ingress path type
+        pathType: ImplementationSpecific
+
+
+    postgresql:
+      useSubChart: false
+      externalHostname: rll-db
+      auth:
+        database: prefect
+        username: postgres
+        existingSecret: orion-db-auth
+
+      # useSubChart: true
+      # auth:
+      #   database: orion
+      #   username: postgres
+      #   existingSecret: orion-db-connection
+      # primary:
+      #   persistence:
+      #     enabled: true
+      #     size: "25Gi"
