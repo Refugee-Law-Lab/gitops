@@ -8,7 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/watson
+  path: ./apps/sherlock
   wait: true
   prune: true
   timeout: 10m
