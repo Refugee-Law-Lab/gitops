@@ -1,0 +1,34 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: minio
+  namespace: flux-system
+spec:
+  targetNamespace: data
+  releaseName: minio
+  chart:
+    spec:
+      chart: minio
+      # reconcileStrategy: Revision
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      version: "11.3.2" # s3 gateway probably not supported after this version
+  interval: 1h
+  install:
+    remediation:
+      retries: 0
+  
+  # https://github.com/bitnami/charts/blob/master/bitnami/minio/values.yaml
+  values:
+    gateway:
+      enabled: "true"
+      type: s3
+      replicaCount: 3
+      auth:
+        s3:
+          accessKey: "${S3_ACCESS_KEY}"
+          secretKey: "${S3_SECRET_KEY}"
+          serviceEndpoint: "${S3_ENDPOINT}"
+
