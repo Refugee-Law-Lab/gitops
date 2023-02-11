@@ -18,7 +18,7 @@ spec:
   interval: 1h
   install:
     remediation:
-      retries: 0
+      retries: -1
   
   # https://github.com/bitnami/charts/blob/master/bitnami/minio/values.yaml
   values:
