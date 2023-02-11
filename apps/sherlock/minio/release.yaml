@@ -4,7 +4,7 @@ metadata:
   name: minio
   namespace: flux-system
 spec:
-  targetNamespace: data
+  targetNamespace: pipeline
   releaseName: minio
   chart:
     spec:
