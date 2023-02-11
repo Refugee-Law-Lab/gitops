@@ -1,0 +1,80 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: lakefs
+  namespace: flux-system
+spec:
+  targetNamespace: pipeline
+  releaseName: lakefs
+  chart:
+    spec:
+      chart: lakefs
+      sourceRef:
+        kind: HelmRepository
+        name: lakefs
+        namespace: flux-system
+
+  dependsOn:
+    - name: s3-proxy
+
+  interval: 1h
+  install:
+    remediation:
+      retries: -1
+    disableWait: true
+  upgrade:
+   disableWait: true
+  
+  # https://github.com/treeverse/charts/blob/master/charts/lakefs/values.yaml
+  values:
+    replicaCount: 1
+    # format: json
+    lakefsConfig: |
+      logging:
+        level: TRACE
+      database:
+        type: "postgres"
+      blockstore:
+          type: s3
+          s3:
+            force_path_style: true
+            discover_bucket_region: false
+            region: RegionOne
+    
+    service:
+      type: ClusterIP
+      port: 8000
+
+    ingress:
+      enabled: true
+      annotations:
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+        nginx.ingress.kubernetes.io/proxy-body-size: 500m
+      hosts:
+        - host: lakefs.internal.rllp.ca
+          paths:
+            - /
+
+    extraEnvVars:
+      - name: LAKEFS_DATABASE_POSTGRES_CONNECTION_STRING
+        valueFrom:
+          secretKeyRef:
+            name: lakefs-auth
+            key: postgresConnectionString
+      - name: LAKEFS_AUTH_ENCRYPT_SECRET_KEY
+        valueFrom:
+          secretKeyRef:
+            name: lakefs-auth
+            key: authEncryptKey
+      - name: LAKEFS_BLOCKSTORE_S3_CREDENTIALS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: lakefs-auth
+            key: s3AccessKey
+      - name: LAKEFS_BLOCKSTORE_S3_CREDENTIALS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: lakefs-auth
+            key: s3SecretKey
+      - name: LAKEFS_BLOCKSTORE_S3_ENDPOINT
+        value: http://swift-s3-proxy
