@@ -22,6 +22,9 @@ spec:
   
   # https://github.com/bitnami/charts/blob/master/bitnami/minio/values.yaml
   values:
+    auth:
+      rootUser: "${S3_ACCESS_KEY}"
+      rootPassword: "${S3_SECRET_KEY}"
     gateway:
       enabled: "true"
       type: s3
