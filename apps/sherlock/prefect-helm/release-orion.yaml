@@ -17,7 +17,7 @@ spec:
   interval: 1h
   install:
     remediation:
-      retries: 0
+      retries: -1
   
   # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-orion/values.yaml
   values:
