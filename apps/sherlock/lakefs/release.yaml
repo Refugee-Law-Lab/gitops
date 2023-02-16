@@ -27,7 +27,7 @@ spec:
   
   # https://github.com/treeverse/charts/blob/master/charts/lakefs/values.yaml
   values:
-    replicaCount: 5
+    replicaCount: 3
     # format: json
     lakefsConfig: |
       logging:
