@@ -1,0 +1,46 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: orion
+  namespace: pipeline
+spec:
+  instances: 3
+
+  bootstrap:
+    pg_basebackup:
+      source: neon
+
+  replica:
+    enabled: true
+    source: neon
+
+  storage:
+    size: 2Gi
+  # note the namespace 'default' in the host name `cluster-example-rw.default.svc`
+  # remember to change accordingly with the namespace of the main cluster
+  externalClusters:
+  - name: neon
+    connectionParameters:
+      host: ep-misty-snow-443186.us-west-2.aws.neon.tech
+      user: orion
+      sslmode: verify-full
+      dbname: prefect
+    # NOTE: if this cluster is created in a different namespace than the main cluster
+    # remember to create the `-replication` and `-ca` secrets in the follower namespace
+    # before creating the follower cluster
+    password:
+      key: password
+      name: orion-db-auth
+
+  backup:
+    barmanObjectStore:
+      destinationPath: "s3://rll-backups/cnpg/prefect"
+      endpointURL: "https://object-arbutus.cloud.computecanada.ca"
+      s3Credentials:
+        accessKeyId:
+          name: orion-db-auth
+          key: s3-access-key
+          
+        secretAccessKey:
+          name: orion-db-auth
+          key: s3-secret-key

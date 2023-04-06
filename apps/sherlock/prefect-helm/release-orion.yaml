@@ -8,18 +8,18 @@ spec:
   releaseName: orion
   chart:
     spec:
-      chart: prefect-orion
+      chart: prefect-server
       sourceRef:
         kind: HelmRepository
         name: prefect
         namespace: flux-system
-      version: 2023.2.3
+      version: 2023.04.05
   interval: 1h
   install:
     remediation:
       retries: -1
   
-  # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-orion/values.yaml
+  # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-server/values.yaml
   values:
     orion:
       replicaCount: 3
@@ -85,7 +85,7 @@ spec:
         # -- default path for the ingress record
         path: /
         # -- ingress path type
-        pathType: ImplementationSpecific
+        pathType: Prefix
 
 
     postgresql:
