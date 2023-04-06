@@ -26,7 +26,7 @@ spec:
         # repository: prefecthq/prefect
         # prefectTag: 2-latest
         # -- enable agent image debug mode
-        debug: false
+        debug: true
 
       ## general configuration of the agent
       config:
@@ -40,7 +40,7 @@ spec:
 
       ## connection settings
       # -- one of 'cloud' or 'orion'
-      apiConfig: "orion"
-      orionApiConfig:
+      apiConfig: "server"
+      serverApiConfig:
         # -- prefect API url
-        apiUrl: http://prefect-orion.pipeline.svc.cluster.local:4200/api
+        apiUrl: http://prefect-server.pipeline.svc.cluster.local:4200/api
