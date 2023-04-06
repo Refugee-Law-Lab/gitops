@@ -7,12 +7,26 @@ spec:
   instances: 3
 
   bootstrap:
-    pg_basebackup:
-      source: neon
+    initdb:
+      database: prefect
+      owner: orion
+      secret:
+        name: orion-db-auth
 
-  replica:
-    enabled: true
-    source: neon
+  # bootstrap:
+  #   # pg_basebackup:
+  #   #   source: neon
+  #   initdb:
+  #     import:
+  #       type: microservice
+  #       databases:
+  #         - prefect
+  #       source:
+  #         externalCluster: neon
+
+  # replica:
+  #   enabled: true
+  #   source: neon
 
   storage:
     size: 2Gi
