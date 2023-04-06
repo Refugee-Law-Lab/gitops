@@ -21,13 +21,14 @@ spec:
   
   # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-server/values.yaml
   values:
-    orion:
+    server:
       replicaCount: 3
       # env:
       #   PREFECT_API_URL: orion.internal.rllp.ca/api
+      publicApiUrl: http://orion.internal.rllp.ca/api
       env:
-        - name: PREFECT_API_URL
-          value: http://orion.internal.rllp.ca/api
+        # - name: PREFECT_API_URL
+        #   value: http://orion.internal.rllp.ca/api
         - name: PREFECT_API_REQUEST_TIMEOUT
           value: '60.0'
         - name: PREFECT_ORION_DATABASE_TIMEOUT
