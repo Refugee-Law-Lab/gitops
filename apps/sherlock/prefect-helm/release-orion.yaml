@@ -22,7 +22,7 @@ spec:
   # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-server/values.yaml
   values:
     server:
-      replicaCount: 1
+      # replicaCount: 1
       # env:
       #   PREFECT_API_URL: orion.internal.rllp.ca/api
       publicApiUrl: http://orion.internal.rllp.ca/api
@@ -40,11 +40,11 @@ spec:
       # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
       autoscaling:
         # -- enable autoscaling for orion
-        enabled: false
+        enabled: true
         # -- minimum number of orion replicas
-        minReplicas: 3
+        minReplicas: 2
         # -- maximum number of orion replicas
-        maxReplicas: 8
+        maxReplicas: 5
         # -- target CPU utilization percentage
         targetCPU: 75
         # -- target Memory utilization percentage
