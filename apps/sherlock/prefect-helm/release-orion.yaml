@@ -80,6 +80,7 @@ spec:
       # className: internal
       annotations:
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+        nginx.ingress.kubernetes.io/proxy-body-size: 100m
       host:
         # -- default host for the ingress record
         hostname: orion.internal.rllp.ca
