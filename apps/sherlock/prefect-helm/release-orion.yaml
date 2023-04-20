@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: prefect
         namespace: flux-system
-      version: 2023.04.05
+      version: 2023.04.13
   interval: 1h
   install:
     remediation:
@@ -22,7 +22,7 @@ spec:
   # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-server/values.yaml
   values:
     server:
-      replicaCount: 3
+      replicaCount: 1
       # env:
       #   PREFECT_API_URL: orion.internal.rllp.ca/api
       publicApiUrl: http://orion.internal.rllp.ca/api
