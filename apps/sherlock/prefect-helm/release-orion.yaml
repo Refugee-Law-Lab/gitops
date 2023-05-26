@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: prefect
         namespace: flux-system
-      version: 2023.04.13
+      version: 2023.05.25
   interval: 1h
   install:
     remediation:
