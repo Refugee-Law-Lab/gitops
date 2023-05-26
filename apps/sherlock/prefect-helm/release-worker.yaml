@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prefect-worker
+  namespace: flux-system
+spec:
+  targetNamespace: pipeline
+  releaseName: worker
+  chart:
+    spec:
+      chart: prefect-worker
+      sourceRef:
+        kind: HelmRepository
+        name: prefect
+        namespace: flux-system
+      version: 2023.05.25
+  interval: 1h
+  install:
+    remediation:
+      retries: 0
+  
+  # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-orion/values.yaml
+  values:
+    worker:
+      image:
+        # repository: prefecthq/prefect
+        # prefectTag: 2-latest
+        # -- enable agent image debug mode
+        debug: true
+
+      ## general configuration of the worker
+      config:
+        # -- name of prefect work pool the worker will poll
+        workPool: "default"
+        # -- how often the worker will query for runs
+        queryInterval: 5
+        # -- when querying for runs, how many seconds in the future can they be scheduled
+        prefetchSeconds: 10
+        # -- connect using HTTP/2 if the server supports it (experimental)
+        http2: true
+
+      ## connection settings
+      # -- one of 'cloud' or 'orion'
+      apiConfig: "server"
+      serverApiConfig:
+        # -- prefect API url
+        apiUrl: http://prefect-server.pipeline.svc.cluster.local:4200/api
