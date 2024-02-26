@@ -13,7 +13,8 @@ spec:
         kind: HelmRepository
         name: prefect
         namespace: flux-system
-      version: 2023.05.25
+      # version: 2023.05.25
+      version: 2024.2.23004808
   interval: 1h
   install:
     remediation:
@@ -45,3 +46,11 @@ spec:
       serverApiConfig:
         # -- prefect API url
         apiUrl: http://prefect-server.pipeline.svc.cluster.local:4200/api
+        uiUrl: ""
+        # uiUrl: http://prefect-server.pipeline.svc.cluster.local:4200
+
+
+# python -c "import requests; print(requests.get('http://prefect-server.pipeline.svc.cluster.local:4200/api'))"
+# python -c "import requests; print(requests.get('http://lakefs.pipeline.svc.cluster.local:8000'))"
+# python -c "import requests; print(requests.get('http://google.com'))"
+python -c "import requests; print(requests.get('http://rll-db:5432'))"

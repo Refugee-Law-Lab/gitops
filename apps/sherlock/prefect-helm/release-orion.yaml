@@ -13,7 +13,8 @@ spec:
         kind: HelmRepository
         name: prefect
         namespace: flux-system
-      version: 2023.05.25
+      # version: 2023.05.25
+      version: 2024.2.23004808 
   interval: 1h
   install:
     remediation:
@@ -22,10 +23,11 @@ spec:
   # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-server/values.yaml
   values:
     server:
-      # replicaCount: 1
+      replicaCount: 1
       # env:
       #   PREFECT_API_URL: orion.internal.rllp.ca/api
-      publicApiUrl: http://orion.internal.rllp.ca/api
+      debug: true
+      prefectApiUrl: https://orion.internal.rllp.ca/api
       env:
         # - name: PREFECT_API_URL
         #   value: http://orion.internal.rllp.ca/api
@@ -42,9 +44,9 @@ spec:
         # -- enable autoscaling for orion
         enabled: true
         # -- minimum number of orion replicas
-        minReplicas: 2
+        minReplicas: 1 # 2
         # -- maximum number of orion replicas
-        maxReplicas: 5
+        maxReplicas: 1 # 5
         # -- target CPU utilization percentage
         targetCPU: 75
         # -- target Memory utilization percentage
@@ -81,6 +83,7 @@ spec:
       annotations:
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
         nginx.ingress.kubernetes.io/proxy-body-size: 100m
+        cert-manager.io/cluster-issuer: letsencrypt-prod
       host:
         # -- default host for the ingress record
         hostname: orion.internal.rllp.ca
@@ -88,6 +91,11 @@ spec:
         path: /
         # -- ingress path type
         pathType: Prefix
+      # tls:
+      #   - hosts:
+      #     - orion.internal.rllp.ca
+      #     secretName: orion-cert
+      tls: true
 
 
     postgresql:
