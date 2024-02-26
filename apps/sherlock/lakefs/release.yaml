@@ -51,10 +51,15 @@ spec:
       annotations:
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
         nginx.ingress.kubernetes.io/proxy-body-size: 500m
+        cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
         - host: lakefs.internal.rllp.ca
           paths:
             - /
+      tls:
+        - hosts:
+          - lakefs.internal.rllp.ca
+          secretName: lakefs-cert
 
     extraEnvVars:
       - name: LAKEFS_DATABASE_POSTGRES_CONNECTION_STRING
