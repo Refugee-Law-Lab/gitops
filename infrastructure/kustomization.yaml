@@ -7,5 +7,5 @@ resources:
   - dashboard
   - external-dns
   - ingress-nginx
-  - monitoring
+  # - monitoring
   # - weave-gitops
