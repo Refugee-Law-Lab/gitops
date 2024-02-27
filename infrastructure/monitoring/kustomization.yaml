@@ -5,7 +5,7 @@ resources:
   - namespace.yaml
   - release.yaml
   - flux-dashboards.yaml
-  - flux-alerts.yaml
+  # - flux-alerts.yaml
 
 
 # https://github.com/fluxcd/flux2/blob/main/manifests/monitoring/monitoring-config/kustomization.yaml
