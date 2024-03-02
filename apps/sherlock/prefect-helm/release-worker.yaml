@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: prefect-worker
@@ -53,4 +53,4 @@ spec:
 # python -c "import requests; print(requests.get('http://prefect-server.pipeline.svc.cluster.local:4200/api'))"
 # python -c "import requests; print(requests.get('http://lakefs.pipeline.svc.cluster.local:8000'))"
 # python -c "import requests; print(requests.get('http://google.com'))"
-python -c "import requests; print(requests.get('http://rll-db:5432'))"
+# python -c "import requests; print(requests.get('http://rll-db:5432'))"
