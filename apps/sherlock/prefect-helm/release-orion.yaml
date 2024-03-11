@@ -44,13 +44,13 @@ spec:
         # -- enable autoscaling for orion
         enabled: true
         # -- minimum number of orion replicas
-        minReplicas: 1 # 2
+        minReplicas: 2 # 2
         # -- maximum number of orion replicas
-        maxReplicas: 1 # 5
+        maxReplicas: 5 # 5
         # -- target CPU utilization percentage
-        targetCPU: 75
+        targetCPU: 66
         # -- target Memory utilization percentage
-        targetMemory: 75
+        targetMemory: 66
 
       # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
       resources:
