@@ -23,7 +23,7 @@ spec:
   # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-server/values.yaml
   values:
     server:
-      replicaCount: 1
+      replicaCount: 3
       # env:
       #   PREFECT_API_URL: orion.internal.rllp.ca/api
       debug: true
